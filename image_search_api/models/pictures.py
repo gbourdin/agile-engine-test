@@ -137,8 +137,7 @@ class PicturesCache:
 
             total_pages = response.get("pageCount", 1)
             current_page = response.get("page", 1) + 1
-            # has_more = response.get("hasMore") and current_page <= total_pages
-            has_more = response.get("hasMore") and current_page <= 2
+            has_more = response.get("hasMore") and current_page <= total_pages
 
         return picture_ids
 

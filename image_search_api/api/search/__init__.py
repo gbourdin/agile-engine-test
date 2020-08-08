@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restplus import Api
 
-from .endpoints import search_ns
+from .endpoints import search_ns, cache_ns
 
 blueprint = Blueprint("search", __name__, url_prefix="/api/v1.0")
 api = Api(
@@ -14,3 +14,4 @@ api = Api(
 
 api.namespaces.clear()
 api.add_namespace(search_ns)
+api.add_namespace(cache_ns)

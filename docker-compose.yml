@@ -1,0 +1,24 @@
+version: "3"
+services:
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - image-search-api
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      ofelia.job-local.my-test-job.schedule: "@every 60m"
+      ofelia.job-local.my-test-job.command: 'curl -X GET "http://image_search_api:8080/api/v1.0/cache/update_cache" -H "accept: application/json"'
+
+  image_search_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    restart: always
+    tty: true
+    command: image_search_api run-uwsgi"

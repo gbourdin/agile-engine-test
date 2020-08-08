@@ -1,15 +1,19 @@
-# image_search_
+# image_search_api
 
-Simple Flask + Flask-RESTPlus api to serve machine learning predictors
+Simple flask api to expose a search microservice for an agiel-engine challenge
+
+A few notes on implementation:
 
 
-I will only implement full string matching. Fuzzy search, partial and full text
-I would never implement manually. And would most likely be using the db engine
-for that.
+Running:
+To run the full system, you'll need docker-ce and docker-compose
+In that case, just run `docker-compose up` and then `curl -X GET "http://localhost:8080/api/v1.0/search/nikon" -H "accept: application/json"
 
-Index update could be a lot smarter. Chose a naive implementation.
+To run locally:
+Simply create a virtualenv with python 3.8 and then:
+```
+python setup.py install
+image_search_api run-uwsgi
+curl -X GET "http://localhost:8080/api/v1.0/search/nikon" -H "accept: application/json"
+```
 
-TODO:
-* Async fetch. Picture download and cache update should be done by a celery task
-* Validation
-* Search

@@ -1,3 +1,3 @@
-from .search import ns as search_ns
+from .search import search_ns, cache_ns
 
-__all__ = ["search_ns"]
+__all__ = ["search_ns", "cache_ns"]

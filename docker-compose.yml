@@ -9,7 +9,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       ofelia.job-local.my-test-job.schedule: "@every 60m"
-      ofelia.job-local.my-test-job.command: 'curl -X GET "http://image_search_api:8080/api/v1.0/cache/update_cache" -H "accept: application/json"'
+      ofelia.job-local.my-test-job.command: "curl -X GET 'http://image_search_api:8080/api/v1.0/cache/update_cache' -H 'accept: application/json'"
 
   image_search_api:
     build:
@@ -21,4 +21,4 @@ services:
       - 8080
     restart: always
     tty: true
-    command: image_search_api run-uwsgi"
+    command: "image_search_api run-uwsgi"

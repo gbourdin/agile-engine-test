@@ -80,6 +80,23 @@ class PicturesCache:
         self.cached_pictures = {}
         self.indexes = {"author": {}, "camera": {}, "tags": {}}
 
+    def search(self, query: str, field: Optional[str] = None) -> List[Picture]:
+        """
+        Given a valid field name and a value to search, returns a list of
+        pictures that match the criteria.
+        If field is invalid or no field is provided, results will be matched
+        against all fields.
+        Results are ordered from best to worst match.
+        """
+        if field not in self.SEARCH_FIELDS or not field:
+            fields = self.SEARCH_FIELDS.keys()
+        else:
+            fields = [field]
+
+        results = self._get_results_for_fields(query, fields)
+
+        return results
+
     def update_cache(self):
         """
         Gets all the picture_ids that need to be downloaded and queues the
@@ -100,11 +117,11 @@ class PicturesCache:
             self.cached_pictures.pop(picture_id)
 
         # Download new pictures and add them to cache
-        print("Downloading pictures")
+        print("Downloading pictures...")
         for picture_id in tqdm.tqdm(pictures_to_download):
             picture = Picture.from_api(picture_id, token)
             self.cached_pictures[picture_id] = picture
-
+        print("Download complete!")
         self.update_indexes()
 
     @staticmethod
@@ -175,23 +192,6 @@ class PicturesCache:
             indexed_pictures = index.get(token, [])
             indexed_pictures.append(picture_id)
             index[token] = indexed_pictures
-
-    def search(self, query: str, field: Optional[str] = None) -> List[Picture]:
-        """
-        Given a valid field name and a value to search, returns a list of
-        pictures that match the criteria.
-        If field is invalid or no field is provided, results will be matched
-        against all fields.
-        Results are ordered from best to worst match.
-        """
-        if field not in self.SEARCH_FIELDS or not field:
-            fields = self.SEARCH_FIELDS.keys()
-        else:
-            fields = [field]
-
-        results = self._get_results_for_fields(query, fields)
-
-        return results
 
     def _get_results_for_fields(self, query: str, fields: List[str]) -> List[Picture]:
         """

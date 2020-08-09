@@ -5,7 +5,7 @@ from typing import List
 from image_search_api.models.pictures import Picture
 
 from flask import current_app as app
-from flask_restplus import Namespace, Resource, fields
+from flask_restx import Namespace, Resource, fields
 
 logger = logging.getLogger(__name__)
 

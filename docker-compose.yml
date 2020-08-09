@@ -7,9 +7,6 @@ services:
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      ofelia.job-local.my-test-job.schedule: "@every 60m"
-      ofelia.job-local.my-test-job.command: "curl -X GET 'http://image_search_api:8080/api/v1.0/cache/update_cache' -H 'accept: application/json'"
 
   image_search_api:
     build:
@@ -22,3 +19,7 @@ services:
     restart: always
     tty: true
     command: "image_search_api run-uwsgi"
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.update-cache.schedule: "@every 60m"
+      ofelia.job-exec.update-cache.command: "curl -X GET 'http://localhost:8080/api/v1.0/cache/update_cache' -H 'accept: application/json'"

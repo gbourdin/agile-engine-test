@@ -65,7 +65,6 @@ class UpdateCache(Resource):
         app.pictures_cache.update_cache()
 
         duration_msec = (datetime.now() - start).total_seconds() * 1000
-        app.logger.info(
-            "Cache updated. Took {} msec".format(duration_msec))
+        app.logger.info("Cache updated. Took {} msec".format(duration_msec))
 
         return "success", 200
